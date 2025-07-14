@@ -5,18 +5,21 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.prod
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; gunicorn --bind 0.0.0.0:8000 config.wsgi'
+    # command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; gunicorn --bind 0.0.0.0:8000 config.wsgi'
     expose:
       - 8000
     environment:
       - DEBUG=0
-      - DATABASE_URL=postgresql://django_traefik:django_traefik@db:5432/django_traefik
-      - DJANGO_ALLOWED_HOSTS=.your-domain.com
+      - DATABASE_URL=postgresql://ermolalex:Lapra+78952-@db:5432/tgbot
+      - DJANGO_ALLOWED_HOSTS=zulip.voblake.shop
     depends_on:
-      - db
+      #- db
+      db:
+        condition: service_healthy
+
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.django.rule=Host(`django-traefik.your-domain.com`)"
+      - "traefik.http.routers.django.rule=Host(`zulip.voblake.shop`)"
       - "traefik.http.routers.django.tls=true"
       - "traefik.http.routers.django.tls.certresolver=letsencrypt"
   db:
@@ -26,9 +29,15 @@ services:
     expose:
       - 5432
     environment:
-      - POSTGRES_USER=django_traefik
-      - POSTGRES_PASSWORD=django_traefik
-      - POSTGRES_DB=django_traefik
+      - POSTGRES_USER=ermolalex
+      - POSTGRES_PASSWORD=Lapra+78952-
+      - POSTGRES_DB=tgbot
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   traefik:
     build:
       context: .
@@ -41,7 +50,7 @@ services:
       - "./traefik-public-certificates:/certificates"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.dashboard.rule=Host(`dashboard-django-traefik.your-domain.com`)"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.kik-soft.ru`)"
       - "traefik.http.routers.dashboard.tls=true"
       - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
       - "traefik.http.routers.dashboard.service=api@internal"
