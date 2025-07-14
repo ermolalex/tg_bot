@@ -91,8 +91,6 @@ DATABASES = {
     )
 }
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -137,14 +135,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-BOT_TOKEN=env('BOT_TOKEN')
-BASE_SITE=env('BASE_SITE')
-ADMIN_ID=env('ADMIN_ID')
+BOT_TOKEN = env('BOT_TOKEN')
+BASE_SITE = env('BASE_SITE')
+ADMIN_ID = env('ADMIN_ID')
 
-ZULIP_API_KEY=env('ZULIP_API_KEY')
-ZULIP_EMAIL=env('ZULIP_EMAIL')
-ZULIP_SITE=env('ZULIP_SITE')
-ZULIP_ALLOW_INSECURE=env.bool('ZULIP_ALLOW_INSECURE')
+ZULIP_API_KEY = env('ZULIP_API_KEY')
+ZULIP_EMAIL = env('ZULIP_EMAIL')
+ZULIP_SITE = env('ZULIP_SITE')
+ZULIP_ALLOW_INSECURE = env.bool('ZULIP_ALLOW_INSECURE')
 
 # все эти пользователи будут автомат.подписаны на новые каналы, в т.ч. пользователь TGBot
-ZULIP_STAFF_IDS=env.list('ZULIP_STAFF_IDS')
+ZULIP_STAFF_IDS = env.list('ZULIP_STAFF_IDS')

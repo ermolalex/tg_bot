@@ -2,7 +2,6 @@ import django
 from django.db import models
 
 
-
 class Company(models.Model):
     name = models.CharField(max_length=50, default='Новая компания')
 
@@ -59,4 +58,3 @@ class Client(models.Model):
 
     def __str__(self):
         return f"{self.fio}, тел:{self.phone_number}, tg_id:{self.tg_id}"
-

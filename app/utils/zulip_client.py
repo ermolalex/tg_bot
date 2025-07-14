@@ -8,8 +8,10 @@ from utils.logger import create_logger
 
 logger = create_logger(logger_name=__name__)
 
+
 class ZulipException(Exception):
     pass
+
 
 class ZulipClient():
     def __init__(self):
@@ -48,7 +50,7 @@ class ZulipClient():
         else:
             err_msg = f"Ошибка при отправлении сообщения в канал'{channel_name}' - {result.get('msg', '')}"
             logger.warning(err_msg)
-            #raise ZulipException(err_msg)
+            # raise ZulipException(err_msg)
 
     def get_channel_id(self, channel_name: str) -> int:
         # по названию канала возвращает его ID, или 0, если канала нет
@@ -74,7 +76,7 @@ class ZulipClient():
         channel_id = self.get_channel_id(channel_name)
         return channel_id > 0
 
-    def subscribe_to_channel(self, channel_name: str, principals: [int]=[]) -> int:
+    def subscribe_to_channel(self, channel_name: str, principals: [int] = []) -> int:
         # Create and subscribe to channel.
         # в параметр principals можно передать список [user_id] , которые будут подписаны на канал
         # {'result': 'success', 'msg': '', 'subscribed': {'8': ['канал про все']}, 'already_subscribed': {}} - если канал создали
@@ -135,8 +137,7 @@ if __name__ == '__main__':
         client = ZulipClient()
     except ZulipException:
         sys.exit("Фатальная ошибка! Выполнение программы прекращено!")
-        
-        
+
     # add channel / subscribe_to_channel
     #
     # print(client.subscribe_to_channel("+79219376763"))
@@ -158,7 +159,6 @@ if __name__ == '__main__':
     #     print(f"ID of channel '{ch_name}' is: {client.get_channel_id(ch_name)}")
     # except ZulipException as e:
     #     print(e)
-
     # get_
-    group_id = 47 # ТехОтдел
+    group_id = 47  # ТехОтдел
     print(client.get_group_members(group_id))

@@ -7,10 +7,9 @@ def create_logger(logger_name: str = __name__):
     logger.setLevel(logging.INFO)
 
     console_handler = logging.StreamHandler()
-    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s" )
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
-
 
     # File handler
     file_handler = RotatingFileHandler('app.log', maxBytes=1000000, backupCount=3)

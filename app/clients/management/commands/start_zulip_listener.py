@@ -9,12 +9,12 @@ from utils import helpers
 
 logger = create_logger(logger_name=__name__)
 
-"""   !!!! Важно
-Пользователь, от лица которого создается клиент, 
-(прописан в переменных окружения ZULIP_API_KEY, ZULIP_EMAIL)
-д.б. подписан на каналы, сообщения в которых нужно перехватывать.
-=> Пользователь ТГБот д.б. подписан на все каналы.  
-"""
+# !!!! Важно
+# Пользователь, от лица которого создается клиент,
+# (прописан в переменных окружения ZULIP_API_KEY, ZULIP_EMAIL)
+# д.б. подписан на каналы, сообщения в которых нужно перехватывать.
+# => Пользователь ТГБот д.б. подписан на все каналы.
+
 # todo Пользователь ТГБот д.б. подписан на все каналы.
 # todo все сотрудники ТехОтдела д.б. подписаны на все каналы.
 
@@ -52,6 +52,7 @@ def extract_tg_id_from_subject(subject: str):
         send_msg_to_bot(settings.ADMIN_ID, msg_text)
         return None
 
+
 def clean_msg_text(raw_text: str) -> str:
     # чистим тект сообщения
 
@@ -60,9 +61,10 @@ def clean_msg_text(raw_text: str) -> str:
 
     return clean_text
 
+
 def on_message(msg: dict):
     logger.info(msg)
-    if msg["client"] in  ("website", "ZulipMobile"):
+    if msg["client"] in ("website", "ZulipMobile"):
         subject = msg["subject"]
         user_tg_id = extract_tg_id_from_subject(subject)
 
@@ -71,8 +73,6 @@ def on_message(msg: dict):
             msg_text = f"{msg['sender_full_name']}: {msg_content}"
 
             send_msg_to_bot(user_tg_id, msg_text)
-
-
 
 # от ТгБота
 # {'id': 86, 'sender_id': 8, 'content': 'проблема 7', 'recipient_id': 20, 'timestamp': 1744282058, 'client': 'ZulipPython',
@@ -83,7 +83,7 @@ def on_message(msg: dict):
 # 'chat': {'id': 542393918, 'first_name': 'Александр', 'type': 'private'}, 'date': 1744282059, 'text': 'проблема 7'}}
 
 # от Zulip
-#{'id': 371, 'sender_id': 8, 'content': 'ping', 'recipient_id': 32, 'timestamp': 1750539450, 'client': 'website',
+# {'id': 371, 'sender_id': 8, 'content': 'ping', 'recipient_id': 32, 'timestamp': 1750539450, 'client': 'website',
 # 'subject': 'Александр_542393918', 'topic_links': [], 'is_me_message': False, 'reactions': [], 'submessages': [],
 # 'sender_full_name': 'Александр Ермолаев', 'sender_email': 'alex@kik-soft.ru', 'sender_realm_str': '',
 # 'display_recipient': 'КиК-софт (тестовый)', 'type': 'stream', 'stream_id': 20, 'avatar_url': None, 'content_type': 'text/x-markdown'}

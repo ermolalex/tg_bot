@@ -12,9 +12,10 @@ class CompanyAdmin(admin.ModelAdmin):
 def fio(obj):
     return f"{obj.fio}"
 
+
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    #ordering = ['company_name']
+    # ordering = ['company_name']
     list_display = ['company_name', 'fio', 'phone_number', 'tg_id', 'zulip_channel_id']
 
     def company_name(self, obj):
