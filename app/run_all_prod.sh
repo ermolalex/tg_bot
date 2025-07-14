@@ -6,7 +6,7 @@ gunicorn --bind 0.0.0.0:8000 config.wsgi &
 sleep 2
 
 # Start the second process
-python manage.py start_zulip_listener &
+#python manage.py start_zulip_listener &
 
 # Wait for any process to exit
 wait -n
