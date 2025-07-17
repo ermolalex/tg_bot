@@ -1,7 +1,8 @@
 services:
   web:
-    build: ./app
-    # command: bash -c 'python manage.py runserver 0.0.0.0:8000' # ; python manage.py start_zulip_listener'
+    build: ./app  # image: my_image:latest
+    command: python manage.py runserver 0.0.0.0:8000
+    # ; python manage.py start_zulip_listener'
 #    entrypoint: ["/bin/sh", "-c"]
 #    command: >
 #      bash -c "python manage.py start_zulip_listener ; python manage.py runserver 0.0.0.0:8000"
@@ -20,6 +21,16 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.django.rule=Host(`django.localhost`)"
+  zulip:
+    build: ./app  #  image: my_image:latest
+    command: python manage.py start_zulip_listener
+    volumes:
+      - ./app:/app
+#    expose:
+#      - 8000
+#    environment:
+#      - DJANGO_ALLOWED_HOSTS=django.localhost
+#      - DEBUG=1
   db:
     image: postgres:15-alpine
     volumes:

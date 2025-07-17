@@ -17,4 +17,4 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . .
 
-CMD ./run_all.sh
+#CMD ./run_all.sh
