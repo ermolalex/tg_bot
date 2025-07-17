@@ -9,8 +9,10 @@ services:
     expose:
       - 8000
     environment:
-      - DEBUG=0
-      - DATABASE_URL=postgresql://django_traefik:django_traefik@db:5432/django_traefik
+      #- DEBUG=0
+      # postgres://USER:PASSWORD@HOST:PORT/NAME
+      # - DATABASE_URL=postgresql://django_traefik:django_traefik@db:5432/django_traefik
+      #- DATABASE_URL=postgresql://ermolalex:Valio78952@db:5432/tg_bot
       - DJANGO_ALLOWED_HOSTS=zulip.voblake.shop
     depends_on:
       - db
@@ -22,13 +24,13 @@ services:
   db:
     image: postgres:15-alpine
     volumes:
-      - postgres_data_prod:/var/lib/postgresql/data/
+      - postgres_prod:/var/lib/postgresql/data/
     expose:
       - 5432
     environment:
-      - POSTGRES_USER=django_traefik
-      - POSTGRES_PASSWORD=django_traefik
-      - POSTGRES_DB=django_traefik
+      - POSTGRES_USER=ermolalex
+      - POSTGRES_PASSWORD=Valio78952
+      - POSTGRES_DB=tg_bot
   traefik:
     build:
       context: .
@@ -49,5 +51,5 @@ services:
 #      - "traefik.http.middlewares.auth.basicauth.users=testuser:$$apr1$$jIKW.bdS$$eKXe4Lxjgy/rH65wP1iQe1"
 
 volumes:
-  postgres_data_prod:
+  postgres_prod:
   traefik-public-certificates:
