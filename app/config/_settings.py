@@ -14,22 +14,27 @@ from pathlib import Path
 
 import environ
 
-env = environ.Env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*y(bpj*0ho*d6w9_cz0fvf428$&&jyzw==ztb$0(fkbvq)o-r5"
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = env(
+    'DJANGO_ALLOWED_HOSTS',
+    default=['127.0.0.1', 'localhost'])
 
 
 # Application definition
@@ -41,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "clients",
 ]
 
 MIDDLEWARE = [
@@ -79,9 +85,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
+    'default': env.db_url(
+        'SQLITE_URL',
+        default='sqlite:////tmp/my-tmp-sqlite.db'
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -125,3 +133,16 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+BOT_TOKEN = env('BOT_TOKEN')
+BASE_SITE = env('BASE_SITE')
+ADMIN_ID = env('ADMIN_ID')
+
+ZULIP_API_KEY = env('ZULIP_API_KEY')
+ZULIP_EMAIL = env('ZULIP_EMAIL')
+ZULIP_SITE = env('ZULIP_SITE')
+ZULIP_ALLOW_INSECURE = env.bool('ZULIP_ALLOW_INSECURE')
+
+# все эти пользователи будут автомат.подписаны на новые каналы, в т.ч. пользователь TGBot
+ZULIP_STAFF_IDS = env.list('ZULIP_STAFF_IDS')
