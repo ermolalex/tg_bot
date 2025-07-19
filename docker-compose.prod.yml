@@ -38,7 +38,7 @@ services:
       - POSTGRES_PASSWORD=Valio78952
       - POSTGRES_DB=tg_bot
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -username=ermolalex"]
+      test: ["CMD-SHELL", "pg_isready --username=ermolalex"]
       interval: 5s
       timeout: 5s
       retries: 5
