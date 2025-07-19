@@ -3,7 +3,7 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.prod
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; gunicorn --bind 0.0.0.0:8000 config.wsgi'
+    command: gunicorn --bind 0.0.0.0:8000 config.wsgi
     expose:
       - 8000
     environment:
@@ -13,8 +13,10 @@ services:
       #- DATABASE_URL=postgresql://ermolalex:Valio78952@db:5432/tg_bot
       - DJANGO_ALLOWED_HOSTS=zulip.voblake.shop
       - CSRF_TRUSTED_ORIGINS=https://zulip.voblake.shop
+
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.django.rule=Host(`zulip.voblake.shop`)"
@@ -30,6 +32,13 @@ services:
       - POSTGRES_USER=ermolalex
       - POSTGRES_PASSWORD=Valio78952
       - POSTGRES_DB=tg_bot
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]  # -username=
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+
   traefik:
     build:
       context: .
