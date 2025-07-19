@@ -6,6 +6,8 @@ from utils.zulip_client import ZulipClient
 from utils.logger import create_logger
 from utils import helpers
 
+from clients.models import Company
+
 
 logger = create_logger(logger_name=__name__)
 
@@ -30,6 +32,12 @@ class Command(BaseCommand):
                          "Проверьте настройки. "
                          "Возможно, не запущен основной сайт Zulip")
             return
+
+        # test
+        companies = Company.objects.all()
+        for c in companies:
+            logger.info(c)
+
         listener.call_on_each_message(on_message)
 
 
