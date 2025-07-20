@@ -1,5 +1,7 @@
 import re
 
+from django.db import connection
+
 # @_**Александр|8** [писал/а](https://zulip.voblake.shop/#narrow/channel/20-.D0.9A.D0.B8.D0.9A-.D1.81.D0.BE.
 # D1.84.D1.82-.28.D1.82.D0.B5.D1.81.D1.82.D0.BE.D0.B2.D1.8B.D0.B9.29/topic/.D0.90.D0.BB.D0.B5.D0.BA.D1.81.
 # D0.B0.D0.BD.D0.B4.D1.80_542393918/near/945):
@@ -70,3 +72,11 @@ def clean_quote2(text: str) -> str:
         print(f"Вы писали: {last_quote}\n\n{new_text}")
         return f"Вы писали: {last_quote}\n\n{new_text}"
     return text
+
+
+def table_exists(table_name):
+    """
+    Checks if a table with the given name exists in the database.
+    """
+    with connection.cursor() as cursor:
+        return table_name in connection.introspection.table_names(cursor)

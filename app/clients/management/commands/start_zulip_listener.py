@@ -34,9 +34,8 @@ class Command(BaseCommand):
             return
 
         # test
-        companies = Company.objects.all()
-        for c in companies:
-            logger.info(c)
+        if helpers.table_exists('client_company'):
+            logger.info("Слушатель запущен. БД создана.")
 
         listener.call_on_each_message(on_message)
 
