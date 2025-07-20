@@ -26,5 +26,5 @@ Update the domain in *docker-compose.prod.yml*, and add your email to *traefik.p
 Build the images and run the containers:
 
 ```sh
-$ docker-compose -f docker-compose.prod.yml up -d --build
+$ docker-compose -f docker-compose.yml up -d --build
 ```
