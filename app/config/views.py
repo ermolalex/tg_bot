@@ -2,7 +2,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from telegram import Update
-from telegram.ext import Application # Or your custom bot handler
+#from telegram.ext import Application # Or your custom bot handler
 
 from utils.logger import create_logger
 
