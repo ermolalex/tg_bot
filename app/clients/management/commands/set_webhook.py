@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 
 
-logger = create_logger(logger_name=__name__)
+# logger = create_logger(logger_name=__name__)
 
 class Command(BaseCommand):
     help = 'Set TG Webhook'
