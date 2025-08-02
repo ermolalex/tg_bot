@@ -12,6 +12,13 @@ from django.conf import settings
 #     await bot.close()
 
 def set_webhook_url():
+    """
+    set webhook     POST https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to}
+    delete webhook  https://api.telegram.org/bot{my_bot_token}/setWebhook?url=
+    get webhook     GET https://api.telegram.org/bot{my_bot_token}/getWebhookInfo
+
+    :return:
+    """
     bot_token = settings.BOT_TOKEN
     url_to_send_updates_to = f"{settings.BASE_SITE}/webhook/"
     url=f"https://api.telegram.org/bot{bot_token}/setWebhook?url={url_to_send_updates_to}"
