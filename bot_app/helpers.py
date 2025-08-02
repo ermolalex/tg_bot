@@ -1,6 +1,4 @@
-import re
-
-from django.db import connection
+import  re
 
 # @_**Александр|8** [писал/а](https://zulip.voblake.shop/#narrow/channel/20-.D0.9A.D0.B8.D0.9A-.D1.81.D0.BE.
 # D1.84.D1.82-.28.D1.82.D0.B5.D1.81.D1.82.D0.BE.D0.B2.D1.8B.D0.B9.29/topic/.D0.90.D0.BB.D0.B5.D0.BA.D1.81.
@@ -23,7 +21,7 @@ from django.db import connection
 
 
 def clean_quote(text: str) -> str:
-    # находим последнее вхождение "```quote"
+    #находим последнее вхождение "```quote"
     text_start = text.rfind("```quote")
 
     # если нету - текст без циирования
@@ -45,12 +43,18 @@ def clean_quote(text: str) -> str:
 
     # кроме последнего вхождения - цитаты
     for m in matches[:-1]:
-        res += f">{text[m.start():m.end()].strip()}\n"
+        res += f">{text[m.start() : m.end()].strip()}\n"
 
     # последнее вхождение - новое сообщение
-    res += f"\n{text[matches[-1].start():matches[-1].end()].strip()}"
+    res += f"\n{text[matches[-1].start() : matches[-1].end()].strip()}"
 
     return res
+
+
+
+
+
+
 
 
 def clean_quote2(text: str) -> str:
@@ -73,10 +77,3 @@ def clean_quote2(text: str) -> str:
         return f"Вы писали: {last_quote}\n\n{new_text}"
     return text
 
-
-# def table_exists(table_name):
-#     """
-#     Checks if a table with the given name exists in the database.
-#     """
-#     with connection.cursor() as cursor:
-#         return table_name in connection.introspection.table_names(cursor)

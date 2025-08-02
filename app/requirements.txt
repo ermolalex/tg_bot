@@ -1,7 +1,8 @@
 Django==4.1.6
 django-environ==0.9.0
 psycopg2-binary==2.9.5
-gunicorn==20.1.0
+uvicorn
+# gunicorn==20.1.0
 whitenoise==6.3.0
-python-telegram-bot==13.15
+aiogram
 zulip

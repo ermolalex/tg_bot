@@ -3,11 +3,12 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.prod
-    command: gunicorn --bind 0.0.0.0:8000 config.wsgi
+    #command: gunicorn --bind 0.0.0.0:8000 config.wsgi
+    command: uvicorn config.asgi:application --host 0.0.0.0 --port 8000
     expose:
       - 8000
     environment:
-      - DJANGO_ALLOWED_HOSTS=zulip.voblake.shop
+      - DJANGO_ALLOWED_HOSTS=*  #zulip.voblake.shop
       - CSRF_TRUSTED_ORIGINS=https://zulip.voblake.shop
     depends_on:
       db:
@@ -26,6 +27,8 @@ services:
       dockerfile: Dockerfile.prod
     command: python manage.py start_zulip_listener
     depends_on:
+      # web:
+      #   condition: service_started
       db:
         condition: service_healthy
 
@@ -48,18 +51,18 @@ services:
       retries: 5
 
 
-  traefik:
-    build:
-      context: .
-      dockerfile: Dockerfile.traefik
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik-public-certificates:/certificates"
-    labels:
-      - "traefik.enable=true"
+#  traefik:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.traefik
+#    ports:
+#      - 80:80
+#      - 443:443
+#    volumes:
+#      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+#      - "./traefik-public-certificates:/certificates"
+#    labels:
+#      - "traefik.enable=true"
 #      - "traefik.http.routers.dashboard.rule=Host(`dashboard-django-traefik.your-domain.com`)"
 #      - "traefik.http.routers.dashboard.tls=true"
 #      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"

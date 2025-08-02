@@ -1,5 +1,4 @@
 import requests
-from django.core.management.base import BaseCommand
 from django.conf import settings
 
 from utils.zulip_client import ZulipClient
@@ -21,23 +20,20 @@ logger = create_logger(logger_name=__name__)
 # todo все сотрудники ТехОтдела д.б. подписаны на все каналы.
 
 
-class Command(BaseCommand):
-    help = 'Старт прослушивателя Zulip'
+def start():
+    zulip_client = ZulipClient()
+    listener = zulip_client.client
+    if not listener:
+        logger.error("Не удалось запустить прослушиватель. "
+                     "Проверьте настройки. "
+                     "Возможно, не запущен основной сайт Zulip")
+        return
 
-    def handle(self, *args, **options):
-        zulip_client = ZulipClient()
-        listener = zulip_client.client
-        if not listener:
-            logger.error("Не удалось запустить прослушиватель. "
-                         "Проверьте настройки. "
-                         "Возможно, не запущен основной сайт Zulip")
-            return
+    # test
+    # if helpers.table_exists('client_company'):
+    #     logger.info("Слушатель запущен. БД создана.")
 
-        # test
-        # if helpers.table_exists('client_company'):
-        #     logger.info("Слушатель запущен. БД создана.")
-
-        listener.call_on_each_message(on_message)
+    listener.call_on_each_message(on_message)
 
 
 def send_msg_to_bot(user_tg_id, text):
