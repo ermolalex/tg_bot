@@ -20,4 +20,4 @@ class Command(BaseCommand):
         url_to_send_updates_to = f"{settings.BASE_SITE}/webhook/"
         url = f"https://api.telegram.org/bot{bot_token}/setWebhook?url={url_to_send_updates_to}"
         res = requests.post(url)
-        print(res)
+        print(res.content)
