@@ -18,7 +18,6 @@ services:
       - "traefik.http.routers.django.tls=true"
       - "traefik.http.routers.django.tls.certresolver=letsencrypt"
 
-  # bot_app  todo
 
   zulip_listener:
     build:
