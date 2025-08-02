@@ -18,6 +18,7 @@ async def telegram_webhook(request):
     if request.method == 'POST':
         try:
             update = json.loads(request.body.decode('utf-8'))
+            print(update)
             # Process the update using Aiogram's dispatcher
             await dp.process_update(types.Update(**update))
             return JsonResponse({"status": "ok"})
