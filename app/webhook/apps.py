@@ -13,7 +13,7 @@ from django.conf import settings
 
 def set_webhook_url():
     bot_token = settings.BOT_TOKEN
-    url_to_send_updates_to = f"{settings.BASE_SITE}/webhook"
+    url_to_send_updates_to = f"{settings.BASE_SITE}/webhook/"
     url=f"https://api.telegram.org/bot{bot_token}/setWebhook?url={url_to_send_updates_to}"
     res = requests.post(url)
     print(res)
