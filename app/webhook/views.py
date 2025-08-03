@@ -1,6 +1,7 @@
 import json
 from aiogram import Bot, Dispatcher, types, Router
 from aiogram.filters import CommandStart
+from asgiref.sync import async_to_sync
 
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -14,13 +15,16 @@ dp = Dispatcher()
 user_router = Router()
 
 @csrf_exempt
-async def telegram_webhook(request):
+# async
+def telegram_webhook(request):
     if request.method == 'POST':
         try:
             update = json.loads(request.body.decode('utf-8'))
             print("******* update", update)
             # Process the update using Aiogram's dispatcher
-            await dp.process_update(types.Update(**update))
+            # await dp.process_update(types.Update(**update))
+            async_to_sync(dp.process_update)(types.Update(**update))
+
             return JsonResponse({"status": "ok"})
         except Exception as e:
             return JsonResponse({"status": "error", "message": str(e)}, status=400)

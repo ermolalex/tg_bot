@@ -30,9 +30,9 @@ class WebhookConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'webhook'
 
-    def ready(self):
-        # asyncio.run(set_webhook_url())
-        set_webhook_url()
+    # def ready(self):
+    #     # asyncio.run(set_webhook_url())
+    #     set_webhook_url()
 
 
 
